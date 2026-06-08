@@ -22,7 +22,7 @@ pipeline {
         stage('SonarQube Scan') {
             steps {
                 withSonarQubeEnv('SonarQube') {
-                    sh 'mvn sonar:sonar -Dsonar.projectKey=java-jar-pipeline'
+                    sh 'mvn sonar:sonar -Dsonar.projectKey=java-jar-pipeline -Dsonar.host.url=http://172.17.0.1:9000'
                 }
             }
         }
