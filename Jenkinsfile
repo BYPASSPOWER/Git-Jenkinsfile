@@ -27,3 +27,11 @@ pipeline {
         }
     }
 }
+
+stage('SonarQube Scan') {
+    steps {
+        withSonarQubeEnv('SonarQube') {
+            sh 'mvn sonar:sonar -Dsonar.projectKey=java-jar-pipeline'
+        }
+    }
+}
