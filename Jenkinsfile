@@ -7,7 +7,6 @@ pipeline {
     }
 
     stages {
-
         stage('Checkout') {
             steps {
                 checkout scm
@@ -20,18 +19,18 @@ pipeline {
             }
         }
 
+        stage('SonarQube Scan') {
+            steps {
+                withSonarQubeEnv('SonarQube') {
+                    sh 'mvn sonar:sonar -Dsonar.projectKey=java-jar-pipeline'
+                }
+            }
+        }
+
         stage('Archive JAR') {
             steps {
                 archiveArtifacts artifacts: 'target/*.jar', fingerprint: true
             }
-        }
-    }
-}
-
-stage('SonarQube Scan') {
-    steps {
-        withSonarQubeEnv('SonarQube') {
-            sh 'mvn sonar:sonar -Dsonar.projectKey=java-jar-pipeline'
         }
     }
 }
